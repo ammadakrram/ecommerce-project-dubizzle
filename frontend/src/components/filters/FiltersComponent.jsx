@@ -7,10 +7,9 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-const FiltersComponent = ({
+const FiltersComponent = React.memo(({
   filters,
   onFiltersChange,
-  onApplyFilters,
   className = "",
 }) => {
   const [expandedSections, setExpandedSections] = useState({
@@ -164,7 +163,7 @@ const FiltersComponent = ({
           <div className="filters-price-content">
             <div className="filters-price-range-container">
               <Range
-                values={[filters.minPrice || 50, filters.maxPrice || 200]}
+                values={[filters.minPrice || 0, filters.maxPrice || 300]}
                 step={5}
                 min={0}
                 max={500}
@@ -176,13 +175,13 @@ const FiltersComponent = ({
                       height: "6px",
                       background:
                         "linear-gradient(to right, #e5e7eb 0%, #e5e7eb " +
-                        ((filters.minPrice || 50) / 500) * 100 +
+                        ((filters.minPrice || 0) / 500) * 100 +
                         "%, #1f2937 " +
-                        ((filters.minPrice || 50) / 500) * 100 +
+                        ((filters.minPrice || 0) / 500) * 100 +
                         "%, #1f2937 " +
-                        ((filters.maxPrice || 200) / 500) * 100 +
+                        ((filters.maxPrice || 300) / 500) * 100 +
                         "%, #e5e7eb " +
-                        ((filters.maxPrice || 200) / 500) * 100 +
+                        ((filters.maxPrice || 300) / 500) * 100 +
                         "%, #e5e7eb 100%)",
                       borderRadius: "3px",
                       width: "100%",
@@ -216,10 +215,10 @@ const FiltersComponent = ({
             </div>
             <div className="filters-price-labels">
               <span className="filters-price-label">
-                ${filters.minPrice || 50}
+                ${filters.minPrice || 0}
               </span>
               <span className="filters-price-label">
-                ${filters.maxPrice || 200}
+                ${filters.maxPrice || 300}
               </span>
             </div>
           </div>
@@ -335,13 +334,15 @@ const FiltersComponent = ({
       </div>
 
       {/* Apply Button */}
-      <div className="filters-footer">
+      {/* <div className="filters-footer">
         <button onClick={onApplyFilters} className="filters-apply-button">
           Apply Filter
         </button>
-      </div>
+      </div> */}
     </div>
   );
-};
+});
+
+FiltersComponent.displayName = 'FiltersComponent';
 
 export default FiltersComponent;

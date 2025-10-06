@@ -36,7 +36,7 @@ export default function OrderSummary({ cart, onApplyPromo, onCheckout }) {
         {/* Subtotal */}
         <div className="order-summary-row">
           <span className="order-summary-label">Subtotal</span>
-          <span className="order-summary-value">${subtotal.toFixed(0)}</span>
+          <span className="order-summary-value">Pkr. {subtotal.toFixed(0)}</span>
         </div>
 
         {/* Discount */}
@@ -45,14 +45,14 @@ export default function OrderSummary({ cart, onApplyPromo, onCheckout }) {
             Discount (-{discountPercent}%)
           </span>
           <span className="order-summary-value order-summary-discount">
-            -${discountAmount.toFixed(0)}
+            -Pkr. {discountAmount.toFixed(0)}
           </span>
         </div>
 
         {/* Delivery Fee */}
         <div className="order-summary-row">
           <span className="order-summary-label">Delivery Fee</span>
-          <span className="order-summary-value">${deliveryFee.toFixed(0)}</span>
+          <span className="order-summary-value">Pkr. {deliveryFee.toFixed(0)}</span>
         </div>
 
         {/* Divider */}
@@ -61,7 +61,7 @@ export default function OrderSummary({ cart, onApplyPromo, onCheckout }) {
         {/* Total */}
         <div className="order-summary-row order-summary-total-row">
           <span className="order-summary-total-label">Total</span>
-          <span className="order-summary-total-value">${total.toFixed(0)}</span>
+          <span className="order-summary-total-value">Pkr. {total.toFixed(0)}</span>
         </div>
 
         {/* Promo Code Input */}

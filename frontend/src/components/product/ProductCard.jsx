@@ -57,11 +57,11 @@ export default function ProductCard({ product }) {
         </div>
 
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-bold text-lg sm:text-xl">${displayPrice}</span>
+          <span className="font-bold text-lg sm:text-xl">Pkr. {displayPrice}</span>
           {product.discountPrice && (
             <>
               <span className="text-gray-400 line-through text-sm sm:text-base">
-                ${product.price}
+                Pkr. {product.price}
               </span>
               <span className="bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-medium">
                 -{discountPercent}%

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { Filter, ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import useProductStore from "../store/productStore";
@@ -14,11 +14,11 @@ export default function ProductListing() {
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState({
     category: searchParams.get("category") || "",
-    minPrice: 50,
-    maxPrice: 200,
+    minPrice: 0,
+    maxPrice: 300,
     colors: [],
     sizes: [],
-    dressStyle: "",
+    dressStyle: searchParams.get("dressStyle") || "",
   });
 
   const categories = ["T-shirts", "Shorts", "Shirts", "Hoodie", "Jeans"];
@@ -59,8 +59,12 @@ export default function ProductListing() {
       return false;
     }
 
-    // Price filter
-    if (product.price < filters.minPrice || product.price > filters.maxPrice) {
+    // Price filter - use discounted price if available, otherwise original price
+    const effectivePrice = product.discountPrice || product.price;
+    if (
+      effectivePrice < filters.minPrice ||
+      effectivePrice > filters.maxPrice
+    ) {
       return false;
     }
 
@@ -105,6 +109,11 @@ export default function ProductListing() {
     fetchProducts();
   }, [fetchProducts]);
 
+  // place window scroll to top useEffect here below
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleFilterChange = useCallback((newFilters) => {
     setFilters(newFilters);
     setCurrentPage(1); // Reset to first page when filters change
@@ -128,11 +137,11 @@ export default function ProductListing() {
     }));
   };
 
-  const applyFilters = useCallback(() => {
-    setShowMobileFilters(false);
-    setCurrentPage(1); // Reset pagination when applying filters
-    // Filters are already applied in real-time through filteredProducts
-  }, []);
+  // const applyFilters = useCallback(() => {
+  //   setShowMobileFilters(false);
+  //   setCurrentPage(1); // Reset pagination when applying filters
+  //   // Filters are already applied in real-time through filteredProducts
+  // }, []);
 
   const clearAllFilters = () => {
     setFilters({
@@ -149,26 +158,18 @@ export default function ProductListing() {
     return searchParams.get("category") || "Casual";
   };
 
-  // Memoize FilterSidebar to prevent unnecessary re-renders
-  const FilterSidebar = useMemo(
-    () => (
-      <div>
-        <FiltersComponent
-          filters={filters}
-          onFiltersChange={handleFilterChange}
-          onApplyFilters={applyFilters}
-        />
-      </div>
-    ),
-    [filters, handleFilterChange, applyFilters]
-  );
-
   return (
     <div className="product-listing-container">
       {/* Main Content */}
       <div className="product-listing-content">
         {/* Sidebar */}
-        <div className="product-listing-sidebar">{FilterSidebar}</div>
+        <div className="product-listing-sidebar">
+          <FiltersComponent
+            filters={filters}
+            onFiltersChange={handleFilterChange}
+            // onApplyFilters={applyFilters}
+          />
+        </div>
 
         {/* Products Grid */}
         <div className="product-listing-main">

@@ -277,53 +277,57 @@ export default function Home() {
 
           <div className="browse-style-grid">
             <Link
-              to="/products?category=casual"
+              to="/products?dressStyle=Casual"
               className="group relative overflow-hidden rounded-lg bg-gray-100 aspect-square sm:aspect-[4/3] hover:scale-105 transition-transform duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-blue-200"></div>
               <div className="relative h-full flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">👔</div>
-                  <h3 className="text-2xl sm:text-3xl font-bold">Casual</h3>
+                  {/* <div className="text-6xl mb-4">👔</div> */}
+                  <img src='/casual.webp'></img>
+                  {/* <h3 className="text-2xl sm:text-3xl font-bold">Casual</h3> */}
                 </div>
               </div>
             </Link>
 
             <Link
-              to="/products?category=formal"
+              to="/products?dressStyle=Formal"
               className="group relative overflow-hidden rounded-lg bg-gray-100 aspect-square sm:aspect-[4/3] hover:scale-105 transition-transform duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200"></div>
               <div className="relative h-full flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">🤵</div>
-                  <h3 className="text-2xl sm:text-3xl font-bold">Formal</h3>
+                  {/* <div className="text-6xl mb-4">🤵</div> */}
+                  <img src="/formal.webp" alt="" />
+                  {/* <h3 className="text-2xl sm:text-3xl font-bold">Formal</h3> */}
                 </div>
               </div>
             </Link>
 
             <Link
-              to="/products?category=party"
+              to="/products?dressStyle=Party"
               className="group relative overflow-hidden rounded-lg bg-gray-100 aspect-square sm:aspect-[4/3] hover:scale-105 transition-transform duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-pink-100 to-pink-200"></div>
               <div className="relative h-full flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">💃</div>
-                  <h3 className="text-2xl sm:text-3xl font-bold">Party</h3>
+                  {/* <div className="text-6xl mb-4">💃</div> */}
+                  <img src="/party.jpg" alt="" />
+                  {/* <h3 className="text-2xl sm:text-3xl font-bold">Party</h3> */}
                 </div>
               </div>
             </Link>
 
             <Link
-              to="/products?category=gym"
+              to="/products?dressStyle=Gym"
               className="group relative overflow-hidden rounded-lg bg-gray-100 aspect-square sm:aspect-[4/3] hover:scale-105 transition-transform duration-300"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-green-100 to-green-200"></div>
               <div className="relative h-full flex items-center justify-center">
                 <div className="text-center">
-                  <div className="text-6xl mb-4">💪</div>
-                  <h3 className="text-2xl sm:text-3xl font-bold">Gym</h3>
+                  {/* <div className="text-6xl mb-4">💪</div> */}
+                  <img src="/gym.webp" alt="" />
+                  {/* <h3 className="text-2xl sm:text-3xl font-bold">Gym</h3> */}
                 </div>
               </div>
             </Link>

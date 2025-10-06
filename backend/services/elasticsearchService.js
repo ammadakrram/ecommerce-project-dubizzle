@@ -263,11 +263,28 @@ const searchProducts = async (searchParams) => {
     filter.push({ term: { dressStyle } });
   }
 
+  // Price filter - use discounted price if available, otherwise original price
   if (minPrice !== undefined || maxPrice !== undefined) {
-    const priceRange = {};
-    if (minPrice !== undefined) priceRange.gte = parseFloat(minPrice);
-    if (maxPrice !== undefined) priceRange.lte = parseFloat(maxPrice);
-    filter.push({ range: { price: priceRange } });
+    const minPriceValue = minPrice !== undefined ? parseFloat(minPrice) : 0;
+    const maxPriceValue = maxPrice !== undefined ? parseFloat(maxPrice) : 999999;
+
+    // Use script query to check effective price (discountPrice || price)
+    filter.push({
+      script: {
+        script: {
+          source: `
+            double effectivePrice = doc['discountPrice'].size() > 0 && doc['discountPrice'].value > 0
+              ? doc['discountPrice'].value
+              : doc['price'].value;
+            return effectivePrice >= params.minPrice && effectivePrice <= params.maxPrice;
+          `,
+          params: {
+            minPrice: minPriceValue,
+            maxPrice: maxPriceValue
+          }
+        }
+      }
+    });
   }
 
   if (colors && colors.length > 0) {
@@ -287,10 +304,36 @@ const searchProducts = async (searchParams) => {
   let sortOptions = [];
   switch (sort) {
     case 'price_asc':
-      sortOptions = [{ price: { order: 'asc' } }];
+      // Sort by effective price (discountPrice if available, else price)
+      sortOptions = [{
+        _script: {
+          type: 'number',
+          script: {
+            source: `
+              doc['discountPrice'].size() > 0 && doc['discountPrice'].value > 0
+                ? doc['discountPrice'].value
+                : doc['price'].value
+            `
+          },
+          order: 'asc'
+        }
+      }];
       break;
     case 'price_desc':
-      sortOptions = [{ price: { order: 'desc' } }];
+      // Sort by effective price (discountPrice if available, else price)
+      sortOptions = [{
+        _script: {
+          type: 'number',
+          script: {
+            source: `
+              doc['discountPrice'].size() > 0 && doc['discountPrice'].value > 0
+                ? doc['discountPrice'].value
+                : doc['price'].value
+            `
+          },
+          order: 'desc'
+        }
+      }];
       break;
     case 'rating':
       sortOptions = [{ rating: { order: 'desc' } }];

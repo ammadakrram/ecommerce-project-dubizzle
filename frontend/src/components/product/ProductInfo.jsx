@@ -76,10 +76,10 @@ export default function ProductInfo({
 
       {/* Price */}
       <div className="product-price-container">
-        <span className="product-price-current">${displayPrice}</span>
+        <span className="product-price-current">Pkr. {displayPrice}</span>
         {originalPrice && (
           <>
-            <span className="product-price-original">${originalPrice}</span>
+            <span className="product-price-original">Pkr. {originalPrice}</span>
             <span className="product-discount-badge">-{discountPercent}%</span>
           </>
         )}

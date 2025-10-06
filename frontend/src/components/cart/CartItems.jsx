@@ -16,7 +16,7 @@ export default function CartItems({ items, onUpdateQuantity, onRemoveItem }) {
           {/* Product Image */}
           <div className="cart-item-img">
             <img
-              src={`http://localhost:5000${item.image}`}
+              src={item.image}
               alt={item.name}
             />
           </div>
@@ -42,7 +42,7 @@ export default function CartItems({ items, onUpdateQuantity, onRemoveItem }) {
             </p>
 
             <div className="cart-item-bottom">
-              <p className="cart-item-price">${parseFloat(item.price).toFixed(0)}</p>
+              <p className="cart-item-price">Pkr. {parseFloat(item.price).toFixed(0)}</p>
 
               <div className="cart-item-qty-controls">
                 <button

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import useAuthStore from "../../store/authStore";
 import useCartStore from "../../store/cartStore";
 import { Popover } from "antd";
+import SearchBar from "../search/SearchBar";
+import MobileSearchModal from "../search/MobileSearchModal";
 
 /**
  * ==========================================
@@ -21,6 +23,7 @@ export default function Header() {
   const { cart, fetchCart } = useCartStore();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const [showBanner, setShowBanner] = useState(true);
 
   // Fetch cart on mount if authenticated
@@ -112,26 +115,15 @@ export default function Header() {
           </nav>
 
           {/* Search Bar - Desktop */}
-          <div className="hidden lg:flex flex-1 max-w-md xl:max-w-lg mx-8 xl:mx-12">
-            <div className="relative w-full">
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-
-              <input
-                type="text"
-                placeholder="Search for products..."
-                className="w-full bg-gray-100  rounded-full focus:outline-none focus:ring-1 focus:ring-gray-300 focus:bg-white transition-all text-base search-input"
-                onFocus={(e) => {
-                  // Navigate to search page on focus (we'll implement this later)
-                  navigate("/search");
-                }}
-              />
-            </div>
-          </div>
+          <SearchBar className="hidden lg:flex flex-1 max-w-md xl:max-w-lg mx-8 xl:mx-12" />
 
           {/* Right Side Icons */}
           <div className="flex items-center gap-3 sm:gap-4">
             {/* Search Icon - Mobile */}
-            <button className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <button
+              onClick={() => setMobileSearchOpen(true)}
+              className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
               <Search className="h-5 w-5 sm:h-6 sm:w-6" />
             </button>
 
@@ -225,6 +217,12 @@ export default function Header() {
           </nav>
         </div>
       )}
+
+      {/* Mobile Search Modal */}
+      <MobileSearchModal
+        isOpen={mobileSearchOpen}
+        onClose={() => setMobileSearchOpen(false)}
+      />
     </header>
   );
 }
