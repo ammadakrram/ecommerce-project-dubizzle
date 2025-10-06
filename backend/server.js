@@ -33,6 +33,12 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:5173', // if using Vite
+  process.env.FRONTEND_URL, // Will be your Vercel URL
+];
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/products', require('./routes/productRoutes'));
